@@ -1,3 +1,4 @@
+# Easy
 # Runtime: 32 ms, faster than 73.01% of Python3 online submissions for Count and Say.
 # Memory Usage: 12.9 MB, less than 100.00% of Python3 online submissions for Count and Say.
 
