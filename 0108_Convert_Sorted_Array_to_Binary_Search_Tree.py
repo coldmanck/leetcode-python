@@ -2,11 +2,11 @@
 # Memory Usage: 15.2 MB, less than 100.00% of Python3 online submissions for Convert Sorted Array to Binary Search Tree.
 
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
 import math
 class Solution:

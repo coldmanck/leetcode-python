@@ -7,9 +7,7 @@ class Solution:
         def check_if_row_valid(row):
             c = Counter(row)
             del c['.']
-            if any([v > 1 for v in list(c.values())]):
-                return False
-            return True
+            return False if any([v > 1 for v in list(c.values())]) else True
         
         for row in board:
             if not check_if_row_valid(row):
