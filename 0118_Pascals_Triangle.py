@@ -21,20 +21,27 @@ class Solution:
         #     pascal(n-1)
         # pascal(numRows)
         # return ans
-        
+
         '''Method 2 DP'''
-        if numRows == 0:
-            return []
-        elif numRows == 1:
-            return [[1]]
-        elif numRows == 2:
-            return [[1], [1, 1]]
-        ans = [[-1] * i for i in range(1, numRows + 1)]
-        ans[:2] = [[1], [1, 1]]
+        ans = [[1] * row for row in range(1, numRows + 1)]
         for row in range(2, numRows):
-            ans[row][0] = ans[row][-1] = 1
-            for idx in range(1, row):
-                ans[row][idx] = ans[row-1][idx] + ans[row-1][idx-1]
-            
+            for col in range(1, row):
+                ans[row][col] = ans[row-1][col-1] + ans[row-1][col]
         return ans
+        
+        '''Method 3 DP'''
+        # if numRows == 0:
+        #     return []
+        # elif numRows == 1:
+        #     return [[1]]
+        # elif numRows == 2:
+        #     return [[1], [1, 1]]
+        # ans = [[-1] * i for i in range(1, numRows + 1)]
+        # ans[:2] = [[1], [1, 1]]
+        # for row in range(2, numRows):
+        #     ans[row][0] = ans[row][-1] = 1
+        #     for idx in range(1, row):
+        #         ans[row][idx] = ans[row-1][idx] + ans[row-1][idx-1]
+            
+        # return ans
     
