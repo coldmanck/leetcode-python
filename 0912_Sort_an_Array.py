@@ -6,23 +6,23 @@ class Solution:
         # merge sort: avg, worst, best time = O(nlogn), space = O(n)
         def mergesort(left, right, nums):
             if left < right:
-                pivot = (left + right) // 2
-                mergesort(left, pivot, nums)  # divide & conquer
-                mergesort(pivot + 1, right, nums) # divide & conquer
-                nums[left:right + 1] = merge(left, pivot, right, nums) # combine 
+                mid = (left + right) // 2 # divide
+                mergesort(left, mid, nums)  # conquer
+                mergesort(mid + 1, right, nums) # conquer
+                nums[left:right + 1] = merge(left, mid, right, nums) # combine 
         
-        def merge(left, pivot, right, nums):
+        def merge(left, mid, right, nums):
             ans = []
-            right_s = pivot + 1
-            while left <= pivot and right_s <= right:
+            right_s = mid + 1
+            while left <= mid and right_s <= right:
                 if nums[left] <= nums[right_s]:
                     ans.append(nums[left])
                     left += 1
                 else:
                     ans.append(nums[right_s])
                     right_s += 1
-            if left <= pivot:
-                ans.extend(nums[left:pivot+1])
+            if left <= mid:
+                ans.extend(nums[left:mid+1])
             else:
                 ans.extend(nums[right_s:right+1])
             return ans
@@ -47,6 +47,7 @@ class Solution:
                 pivot_idx = partition(left, right, nums) # divide
                 quicksort(left, pivot_idx - 1, nums) # conquer
                 quicksort(pivot_idx + 1, right, nums) # conquer
+                # no 'combine' is needed since the two sublists are arranged in the 'divide' step already
         
         quicksort(0, len(nums) - 1, nums)
         return nums
