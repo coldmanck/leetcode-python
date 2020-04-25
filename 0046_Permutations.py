@@ -3,14 +3,14 @@
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        ans = []
-        def permute_helper(i): # i means currently working on nums[i:]
+        def permute_helper(i, ans): # i means currently working on nums[i:]
             if i == len(nums) - 1:
                 ans.append(nums.copy())
                 return
             for j in range(i, len(nums)):  # j means starting from diff element
                 nums[i], nums[j] = nums[j], nums[i]
-                permute_helper(i + 1)
+                permute_helper(i + 1, ans)
                 nums[i], nums[j] = nums[j], nums[i]
-        permute_helper(0)
+        ans = []
+        permute_helper(0, ans)
         return ans
