@@ -34,7 +34,7 @@ def radix_sort(arr):
 
 # Time: worst O(n^2), avg=best O(n+k)
 #   where O(n) is the complexity for making the buckets and O(k) is the complexity for sorting the 
-#   elements of the bucket using algorithms having linear time complexity at the best case.
+#   elements of the bucket using algorithms having linear time complexity at the best case (e.g. insertion/bubble sort).
 # Space: O(n+k)
 # Bucket sort is used when:
 # - input is uniformly distributed over a range.
