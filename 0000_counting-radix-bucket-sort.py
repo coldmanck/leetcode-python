@@ -15,7 +15,7 @@ def counting_sort(arr, div=1): # arr in the range of 0-9
     # put element into correct location
     for i in range(len(arr) - 1, -1, -1): # note here we need to go backward from the end since we are inserting backward too
         out[count[arr[i] // div % 10] - 1] = arr[i] # out[count[arr[i]] - 1] = arr[i]
-        count[arr[i] // div % 10] -= 1
+        count[arr[i] // div % 10] -= 1 # count[arr[i]] -= 1
     arr[:] = out[:] # put results back to the original array
 
 # Time: O(d*(n+k)) where k is the base range (k=10 here), d is the nb of digit of the maximum element. 
