@@ -10,7 +10,7 @@ class Node:
 
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
-        # Solution 1: level-order traversal (BFS) with queue
+        # solution 1: level-order queue-based method
         # Time O(n) Space O(n)
         # if not root:
         #     return None
@@ -18,24 +18,29 @@ class Solution:
         # while level:
         #     for i in range(len(level) - 1):
         #         level[i].next = level[i + 1]
+        #     level[-1].next = None
         #     level = [leaf for node in level for leaf in (node.left, node.right) if leaf]
         # return root
     
         # solution 2: next-pointer method
         # Time O(n) Space O(1)
-        if not root:
-            return None
-        node = root
-        while node.left:
-            next_level_start = node.left
+        def find_next_node_for_child(node):
             while node:
-                node.left.next = node.right
-                if node.next:
-                    node.right.next = node.next.left
+                if node.left:
+                    return node, node.left
+                if node.right:
+                    return node, node.right
                 node = node.next
-            node = next_level_start
+            return None, None
+        
+        node = root
+        while node:
+            node, next_node = find_next_node_for_child(node)
+            while node:
+                if node.left:
+                    node.left.next = node.right if node.right else find_next_node_for_child(node.next)[1]
+                if node.right:
+                    node.right.next = find_next_node_for_child(node.next)[1]
+                node = node.next
+            node = next_node
         return root
-                
-            
-            
-            
