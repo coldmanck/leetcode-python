@@ -23,13 +23,12 @@ class Solution:
         stack, ans = [(root, False)], []
         while stack:
             root, is_visited = stack.pop()
-            if is_visited:
-                ans.append(root.val)
-            else:
-                stack.append((root, True))
-                if root.right:
+            if root:
+                if is_visited:
+                    ans.append(root.val)
+                else:
+                    stack.append((root, True))
                     stack.append((root.right, False))
-                if root.left:
                     stack.append((root.left, False))
         return ans
         

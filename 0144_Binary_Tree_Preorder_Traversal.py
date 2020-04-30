@@ -19,9 +19,9 @@ class Solution:
         ans = []
         while stack:
             node = stack.pop()
+            if not node:
+                continue
             ans.append(node.val)
-            if node.right:
-                stack.append(node.right)
-            if node.left:
-                stack.append(node.left)
+            stack.append(node.right)
+            stack.append(node.left)
         return ans
