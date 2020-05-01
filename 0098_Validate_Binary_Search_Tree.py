@@ -5,10 +5,61 @@ class TreeNode:
         self.left = None
         self.right = None
 
-'''All time, space complexity are O(N) where N is the number of nodes in the BST'''
+
 class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
-        # Inorder DFS: 88 ms	16.2 MB	python3
+        # Recursion (Preorder DFS)
+        def helper(node, lower, upper):
+            if not node:
+                return True
+            if not lower < node.val < upper:
+                return False
+            return helper(node.left, lower, node.val) and helper(node.right, node.val, upper)
+        
+        return helper(root, float('-inf'), float('inf'))
+        
+        # Recursion (Inorder DFS)
+        '''
+        def helper(node, prev_val):
+            if not node:
+                return True, prev_val
+            # check left subtree
+            is_valid, prev_val = helper(node.left, prev_val)
+            if not is_valid:
+                return False, prev_val
+            # check current node
+            if prev_val >= node.val:
+                return False, prev_val
+            prev_val = node.val
+            # check right subtree
+            is_valid, prev_val = helper(node.right, prev_val)
+            if not is_valid:
+                return False, prev_val
+            
+            return True, prev_val
+        return helper(root, float('-inf'))[0]
+        '''
+    
+        # Iteration (Preorder DFS)
+        '''
+        if not root:
+            return True
+        stack = [(root, float('-inf'), float('inf'))]
+        while stack:
+            root, lower, upper = stack.pop()
+            if not root:
+                continue
+            if not lower < root.val < upper:
+                return False
+            stack.append([root.left, lower, root.val])
+            stack.append([root.right, root.val, upper])
+        return True
+        '''
+        
+        # Iteration (Inorder DFS)
+        '''
+        if not root:
+            return True
         stack = []
         last_node_val = float('-inf')
         while stack or root:
@@ -21,8 +72,9 @@ class Solution:
             last_node_val = root.val
             root = root.right
         return True
+        '''
         
-        # Iterative BFS: 84 ms	16.1 MB	python3
+        # Iteration BFS
         '''
         from collections import deque
         if not root:
@@ -39,30 +91,4 @@ class Solution:
         return True
         '''
         
-        # Iterative DFS: 72 ms	16.3 MB	python3
-        '''
-        if not root:
-            return True
-        stack = [(root, float('-inf'), float('inf'))]
-        while stack:
-            root, lower, upper = stack.pop()
-            if not root:
-                continue
-            if not lower < root.val < upper:
-                return False
-            stack.append([root.left, lower, root.val])
-            stack.append([root.right, root.val, upper])
-        return True
-        '''
         
-        # Recursion: 44 ms	16.1 MB	python3
-        '''
-        def helper(node, lower, upper):
-            if not node:
-                return True
-            if not lower < node.val < upper:
-                return False
-            return helper(node.left, lower, node.val) and helper(node.right, node.val, upper)
-        
-        return helper(root, float('-inf'), float('inf'))
-        '''
