@@ -1,3 +1,57 @@
+# Time: worst=avg=best O(n^2)
+# Space: O(1)
+def bubble_sort(arr):
+    for i in range(len(arr) - 1):
+        for j in range(0, len(arr) - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+
+# Time: worst=avg=best O(n^2)
+# Space: O(1)
+def selection_sort(arr):
+    for i in range(len(arr) - 1):
+        min_idx = i
+        for j in range(i + 1, len(arr)):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[min_idx], arr[i] = arr[i], arr[min_idx]
+    return arr
+
+
+# Time: worst=avg O(n^2), best O(n)
+# Space: O(1)
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        j = i - 1
+        while j >= 0 and arr[j] > arr[j + 1]:
+            arr[j], arr[j + 1] = arr[j + 1], arr[j]
+            j -= 1
+    return arr
+
+# Time: worst O(n^2), best=avg O(nlogn)
+# Space: O(1)
+def quick_sort(arr):
+    return quick_sort_helper(arr, 0, len(arr) - 1)
+
+def quick_sort_helper(arr, left, right):
+    if left < right:
+        pivot = partition(arr, left, right)
+        quick_sort_helper(arr, left, pivot - 1)
+        quick_sort_helper(arr, pivot + 1, right)
+
+def partition(arr, left, right):
+    pivot = arr[right]
+    new_pivot_idx = left
+    for i in range(left, right):
+        if arr[i] <= pivot:
+            arr[i], arr[new_pivot_idx] = arr[new_pivot_idx], arr[i]
+            new_pivot_idx += 1
+    arr[new_pivot_idx], arr[right] = arr[right], arr[new_pivot_idx]
+    return new_pivot_idx
+
+
 # Time: worst=avg=best time O(n+k) where k is the size range (k=10 here). Thus it is linear time when k is O(n)
 # Space: O(n+k)
 # Counting sort is used when:
@@ -49,15 +103,33 @@ def bucket_sort(arr): # all elements range [0.0, 1.0)
 
 arr = [4, 2, 2, 8, 3, 3, 1]
 print("Original array: ", arr)
-counting_sort(arr)
-print("Sorted Array in Ascending Order: ", arr)
+bubble_sort(arr)
+print("Bubble sort in Ascending Order: ", arr)
 
+arr = [4, 2, 2, 8, 3, 3, 1]
+selection_sort(arr)
+print("Selection sort in Ascending Order: ", arr)
+
+arr = [4, 2, 2, 8, 3, 3, 1]
+insertion_sort(arr)
+print("Insertion sort in Ascending Order: ", arr)
+
+arr = [4, 2, 2, 8, 3, 3, 1]
+quick_sort(arr)
+print("Quick sort in Ascending Order: ", arr)
+
+arr = [4, 2, 2, 8, 3, 3, 1]
+counting_sort(arr)
+print("Counting sort in Ascending Order: ", arr)
+
+print('---')
 arr = [412, 235, 207, 84, 389, 39, 155]
 print("Original array: ", arr)
 radix_sort(arr)
-print("Sorted Array in Ascending Order: ", arr)
+print("Radix sort in Ascending Order: ", arr)
 
+print('---')
 arr = [.42, .32, .33, .52, .37, .47, .51]
 print("Original array: ", arr)
 bucket_sort(arr)
-print("Sorted Array in Ascending order:", arr)
+print("Bucket sort in Ascending order:", arr)
