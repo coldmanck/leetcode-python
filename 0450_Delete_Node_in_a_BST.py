@@ -22,8 +22,9 @@ class Solution:
             while node.left:
                 is_left = True
                 prev, node = node, node.left
+            # remember to connect back the (possibly existed) right subtree
             if is_left:
-                prev.left = node.right
+                prev.left = node.right 
             else:
                 prev.right = node.right
             # remember to reconnect all connections
