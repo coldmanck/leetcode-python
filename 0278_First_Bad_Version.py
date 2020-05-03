@@ -10,6 +10,22 @@ class Solution:
         :type n: int
         :rtype: int
         """
+        # Iteration
+        if isBadVersion(1):
+            return 1
+        left, right = 1, n
+        while left < right:
+            mid = (left + right) // 2
+            if isBadVersion(mid) and not isBadVersion(mid - 1):
+                return mid
+            if isBadVersion(mid):
+                right = mid
+            else:
+                left = mid + 1
+        return left
+    
+        # Recursion
+        '''
         if isBadVersion(1):
             return 1
         
@@ -18,5 +34,5 @@ class Solution:
             if isBadVersion(mid) and not isBadVersion(mid - 1):
                 return mid
             return binary_search(n, left, mid - 1) if isBadVersion(mid) else binary_search(n, mid + 1, right)
-        
         return binary_search(n, 1, n)
+        '''
