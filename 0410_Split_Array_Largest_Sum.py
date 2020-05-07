@@ -1,6 +1,6 @@
 class Solution:
     def splitArray(self, nums: List[int], m: int) -> int:
-        # Time O(nlogn)
+        # Time O(nlog(sum(n)-max(n))
         def is_valid(mid):
             cur_sum = count = 0
             for num in nums:
