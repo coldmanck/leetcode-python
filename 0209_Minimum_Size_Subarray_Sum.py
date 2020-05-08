@@ -3,9 +3,11 @@ class Solution:
         '''brute-force + binary-search: time O(nlogn) space O(n)'''
         if not nums:
             return 0
+        # create a cumulative sum array (time O(n) space O(n) here)
         cum = [nums[0]] + [0] * (len(nums) - 1)
         for i in range(1, len(nums)):
             cum[i] = cum[i - 1] + nums[i]
+        # for each idx, find the least farthest ending idx using binary search
         min_len = float('inf')
         for i in range(len(nums)):
             left, right = i, len(nums) - 1
