@@ -3,8 +3,8 @@
 
 class Node:
     def __init__(self, ch=None):
-        self.ch = ch
-        self.children = [None] * 27
+        self.children = [None] * 26
+        self.is_end = False
 
 class Trie:
 
@@ -14,6 +14,8 @@ class Trie:
         """
         self.root = Node()
         
+    def word_idx_in_children(self, word_idx):
+        return ord(word_idx) - ord('a')
 
     def insert(self, word: str) -> None:
         """
@@ -21,15 +23,14 @@ class Trie:
         """
         idx = 0
         node = self.root
-        while idx < len(word) and node.children[ord(word[idx]) - ord('a')]:
-            node = node.children[ord(word[idx]) - ord('a')]
+        while idx < len(word) and node.children[self.word_idx_in_children(word[idx])]:
+            node = node.children[self.word_idx_in_children(word[idx])]
             idx += 1
         while idx < len(word):
-            node.children[ord(word[idx]) - ord('a')] = Node(word[idx])
-            node = node.children[ord(word[idx]) - ord('a')]
+            node.children[self.word_idx_in_children(word[idx])] = Node(word[idx])
+            node = node.children[self.word_idx_in_children(word[idx])]
             idx += 1
-        node.children[-1] = Node('END')
-        
+        node.is_end = True
 
     def search(self, word: str) -> bool:
         """
@@ -37,20 +38,19 @@ class Trie:
         """
         idx = 0
         node = self.root
-        while idx < len(word) and node.children[ord(word[idx]) - ord('a')]:
-            node = node.children[ord(word[idx]) - ord('a')]
+        while idx < len(word) and node.children[self.word_idx_in_children(word[idx])]:
+            node = node.children[self.word_idx_in_children(word[idx])]
             idx += 1
-        return True if idx == len(word) and node.children[-1] and node.children[-1].ch == 'END' else False
+        return True if idx == len(word) and node.is_end else False
         
-
     def startsWith(self, prefix: str) -> bool:
         """
         Returns if there is any word in the trie that starts with the given prefix.
         """
         idx = 0
         node = self.root
-        while idx < len(prefix) and node.children[ord(prefix[idx]) - ord('a')]:
-            node = node.children[ord(prefix[idx]) - ord('a')]
+        while idx < len(prefix) and node.children[self.word_idx_in_children(prefix[idx])]:
+            node = node.children[self.word_idx_in_children(prefix[idx])]
             idx += 1
         return True if idx == len(prefix) else False
 
