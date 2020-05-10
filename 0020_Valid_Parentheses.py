@@ -3,18 +3,12 @@
 
 class Solution:
     def isValid(self, s: str) -> bool:
-        if len(s) == 0:
-            return True
-        
+        parentheses = {')':'(', ']':'[', '}':'{'}
         stack = []
-        open_parantheses = set(['(', '[', '{'])
-        dict_parantheses = {')':'(', ']':'[', '}':'{'}
-        
         for ch in s:
-            if ch in open_parantheses:
+            if ch not in parentheses:
                 stack.append(ch)
             else:
-                if len(stack) == 0 or stack.pop() != dict_parantheses[ch]:
+                if not stack or stack.pop() != parentheses[ch]:
                     return False
-        
-        return len(stack) == 0
+        return not stack
