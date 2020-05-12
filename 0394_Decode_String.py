@@ -1,11 +1,11 @@
 class Solution:
     def decodeString(self, s: str) -> str:
         stack = []
+        temp = []
         for ch in s:
             if ch != ']':
                 stack.append(ch)
             else:
-                temp = []
                 while stack[-1] != '[':
                     temp.append(stack.pop())
                 stack.pop() # pop '['
@@ -15,4 +15,5 @@ class Solution:
                     nb += ratio * int(stack.pop())
                     ratio *= 10
                 stack.append(''.join(nb * temp))
+                temp.clear()
         return ''.join(stack)
