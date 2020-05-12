@@ -6,6 +6,7 @@ class Solution:
         '''
         
         '''BFS'''
+        import math
         largest_perfect_nb = int(math.sqrt(n))
         perfect_nbs = [i ** 2 for i in range(1, largest_perfect_nb + 1)]
         from collections import deque
