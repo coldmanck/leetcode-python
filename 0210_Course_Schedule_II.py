@@ -18,5 +18,5 @@ class Solution:
                 indeg[neighbor] -= 1
                 if indeg[neighbor] == 0:
                     queue.append(neighbor)
-        return ans if len(visited) == numCourses else []    
+        return ans if len(visited) == numCourses else []
         
