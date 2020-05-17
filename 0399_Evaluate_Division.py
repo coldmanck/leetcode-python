@@ -8,8 +8,12 @@ class Solution:
             graph[num][den] = val
             graph[den][num] = 1 / val
             graph[num][num] = graph[den][den] = 1.0
-        for k in graph:
-            for i in graph[k]:
-                for j in graph[k]:
-                    graph[i][j] = graph[i][k] * graph[k][j]
+        # for k in graph:
+        #     for i in graph[k]:
+        #         for j in graph[k]:
+        #             graph[i][j] = graph[i][k] * graph[k][j]
+        import itertools
+        for k, i, j in itertools.permutations(graph, 3):
+            if k in graph[i] and j in graph[k]:
+                graph[i][j] = graph[i][k] * graph[k][j]
         return [graph[num].get(den, -1.0) for num, den in queries]
