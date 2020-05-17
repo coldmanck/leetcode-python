@@ -1,31 +1,22 @@
-import heapq, collections
-
-City = collections.namedtuple('City', ('cost', 'city_name', 'path'))
+# Runtime: 484 ms, faster than 81.40% of Python3 online submissions for Network Delay Time.
+# Memory Usage: 15.6 MB, less than 7.69% of Python3 online submissions for Network Delay Time.
 
 class Solution:
     def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
-        graph = collections.defaultdict(set)
-        for edge in times:
-            graph[edge[0]].add((edge[1], edge[2]))
-
-        city_heap = [City(0, K, ())]
+        '''Time O(V+ElogE) Space O(V+E)'''
+        from collections import defaultdict
+        import heapq
+        graph = defaultdict(list)
+        for u, v, w in times: # Time O(V)
+            graph[u].append((v, w))
         visited = set()
-        mins = {K: 0}
-        while city_heap:
-            city1 = heapq.heappop(city_heap)
-            if city1.city_name in visited:
+        heap = [(0, K)] # [cost, node]
+        while heap and len(visited) < N: # Time O(ElogE)
+            cost, node = heapq.heappop(heap) # O(logE)
+            if node in visited:
                 continue
-            ans = city1.cost
-            visited.add(city1.city_name)
-            path = (city1.path, city1.city_name)
-
-            for city2_name, weight in graph[city1.city_name]:
-                if city2_name in visited:
-                    continue
-                prev_cost = mins.get(city2_name, None)
-                new_cost = weight + city1.cost
-                if prev_cost is None or new_cost < prev_cost:
-                    mins[city2_name] = new_cost
-                    heapq.heappush(city_heap, City(new_cost, city2_name, path))
-
-        return ans if len(visited) == N else -1
+            visited.add(node)
+            for nbr, cost_nbr in graph[node]:
+                if not nbr in visited:
+                    heapq.heappush(heap, (cost + cost_nbr, nbr)) # O(logE)
+        return cost if len(visited) == N else -1
