@@ -1,17 +1,18 @@
-from collections import deque
 class Solution:
     def findCircleNum(self, M: List[List[int]]) -> int:
+        from collections import deque
+        queue = deque()
         visited = set()
         ans = 0
-        for i in range(len(M)):
-            if i not in visited:
+        for i in range(len(M)): # for all student
+            if i not in visited: # if haven't form a circle
                 ans += 1
-                queue = deque()
+                visited.add(i)
                 queue.append(i)
                 while queue:
-                    s = queue.popleft()
-                    visited.add(s)
-                    for j in range(i, len(M)):
-                        if M[s][j] == 1 and j not in visited:
-                            queue.append(j)
+                    j = queue.popleft()
+                    for k in range(len(M[0])): # for the rels between this student and other students
+                        if not k in visited and M[j][k] == 1:
+                            queue.append(k)
+                            visited.add(k)
         return ans

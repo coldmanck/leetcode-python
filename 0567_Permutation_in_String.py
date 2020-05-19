@@ -1,3 +1,4 @@
+from collections import Counter
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
         # time O(len(s1)*len(s2)) space O(1) (26 chs)
