@@ -1,5 +1,6 @@
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
+        # worst time O(|E| + |V|log|V|)
         from collections import defaultdict
         import heapq
         graph = defaultdict(list)

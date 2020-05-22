@@ -3,13 +3,10 @@
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        '''Method 1: recursion (TLE)
-        Time O(2^n)
-        Space O(n)
-        '''
+        '''Method 1: recursion (TLE)'''
         '''Method 2: recursion + memoization
-        Time O(n^2)
-        Space O(n)
+        Time O(n^2) Space O(n)
+        '''
         '''
         def word_break(idx, s, memo):
             if idx == len(s):
@@ -27,3 +24,15 @@ class Solution:
             return memo[idx]
         
         return word_break(0, s, {})
+        '''
+        '''Method 3: DP'''
+        cache = [False] * (len(s) + 1)
+        cache[0] = True
+        set_wordDict = set(wordDict)
+        for i in range(1, len(cache)):
+            for j in range(0, i):
+                if cache[j] and s[j:i] in set_wordDict:
+                    cache[i] = True
+                    break
+        
+        return cache[-1]
