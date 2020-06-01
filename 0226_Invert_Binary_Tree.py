@@ -9,26 +9,17 @@ class TreeNode:
 class Solution:
     def invertTree(self, root: TreeNode) -> TreeNode:
         # recursion: Time O(n) Space O(h)
-        # def invert_tree(root):
-        #     if not root:
-        #         return None
-        #     left = invert_tree(root.left)
-        #     right = invert_tree(root.right)
-        #     root.right = left
-        #     root.left = right
-        #     return root
-        # return invert_tree(root)
+        # if not root:
+        #     return None
+        # root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+        # return root
     
         # iterative solution: Time O(n) Space O(h)
-        if not root:
-            return None
-        head = root
         stack = [root]
         while stack:
-            root = stack.pop()
-            root.right, root.left = root.left, root.right
-            if root.right:
-                stack.append(root.right)
-            if root.left:
-                stack.append(root.left)
-        return head
+            node = stack.pop()
+            if not node:
+                continue
+            node.left, node.right = node.right, node.left
+            stack.extend([node.left, node.right])
+        return root

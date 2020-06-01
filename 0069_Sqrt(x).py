@@ -4,15 +4,13 @@ class Solution:
         # if x <= 1:
         #     return x
         # left, right = 1, x // 2
-        # while left <= right:
-        #     mid = left + (right - left) // 2
-        #     mid_square = mid ** 2
-        #     if mid_square == x or (mid_square < x and (mid_square + 2 * mid + 1) > x):
-        #         return mid
-        #     if mid_square < x:
+        # while left < right:
+        #     mid = (left + right) // 2
+        #     if mid ** 2 < x:
         #         left = mid + 1
         #     else:
-        #         right = mid - 1
+        #         right = mid
+        # return left - 1 if left ** 2 > x else left
         
         '''Newton's Method'''
         if x <= 1:
