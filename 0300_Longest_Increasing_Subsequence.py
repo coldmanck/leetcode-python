@@ -1,5 +1,19 @@
+from functools import lru_cache
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
+        # use DP because of finding the "longest" increasing subsequence
+        # dp(i) return the LIS in nums[0:i+1] (incl. the int. at index i)
+        # recurrence relation: dp(i) = max([dp(j) + 1 for j in range(i) if nums[j] < nums[i]])
+        # base cases: dp(0) = 1
+        
+        @lru_cache(None)
+        def dp(i):
+            if i == 0:
+                return 1
+            return max([1] + [dp(j) + 1 for j in range(i) if nums[j] < nums[i]])
+
+        return max(dp(i) for i in range(len(nums)))
+        
         '''Brute-force recursion (TLE): time O(2^n) space O(n)'''
         def max_lis(idx, cur_max):
             if idx == len(nums):
