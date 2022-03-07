@@ -15,15 +15,28 @@ class Solution:
         # return total
         
         '''Method 2 DP: O(n) time O(n) space'''
-        max_lefts, max_rights = [0] * len(height), [0] * len(height)
-        max_left = max_right = 0
+        # max_lefts, max_rights = [0] * len(height), [0] * len(height)
+        # max_left = max_right = 0
+        # for i in range(len(height)):
+        #     max_left = max(max_left, height[i])
+        #     max_lefts[i] = max_left
+        # for i in reversed(range(len(height))):
+        #     max_right = max(max_right, height[i])
+        #     max_rights[i] = max_right
+        # total = 0
+        # for i in range(len(height)):
+        #     total += min(max_lefts[i], max_rights[i]) - height[i]
+        # return total
+
+        '''Method 3 DP (II): O(n) time O(n) space'''
+        ans = [0] * len(height)
+        left_max = right_max = 0
         for i in range(len(height)):
-            max_left = max(max_left, height[i])
-            max_lefts[i] = max_left
-        for i in reversed(range(len(height))):
-            max_right = max(max_right, height[i])
-            max_rights[i] = max_right
-        total = 0
-        for i in range(len(height)):
-            total += min(max_lefts[i], max_rights[i]) - height[i]
-        return total
+            left_max = max(left_max, height[i])
+            ans[i] = max(0, left_max - height[i])
+        final_ans = 0 # for further optimization
+        for i in range(len(height) - 1, -1, -1):
+            right_max = max(right_max, height[i])
+            # ans[i] = min(ans[i], right_max - height[i])
+            final_ans += min(ans[i], right_max - height[i])
+        return final_ans # sum(ans)
