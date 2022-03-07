@@ -1,5 +1,26 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        # can be factorized nums[j] + nums[k] == -nums[i]
+        if len(nums) <= 2:
+            return []
+        ans = set()
+        nums.sort()
+        for i in range(len(nums) - 2):
+            target = -nums[i]
+            value_needed = set()
+            for j in range(i + 1, len(nums)):
+                if target - nums[j] in value_needed:
+                    ans.add(
+                        ((-target, target - nums[j], nums[j]))
+                    )
+                else:
+                    value_needed.add(nums[j])
+        return list(ans)
+        # time: O(n**2 + nlogn) = O(n**2)
+        # space: O(n) for python's sorted or O(nlogn) depends on the sorting algo. used
+        
+        # binary search?
+        '''
         nums.sort()
         ans = []
         i = 0
@@ -27,6 +48,7 @@ class Solution:
             while i < len(nums) - 2 and nums[i] == nums[i - 1]:
                 i += 1
         return ans
+        '''
         
         # recursion method: O(2^n)
         '''
