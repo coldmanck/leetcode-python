@@ -1,0 +1,26 @@
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        if grid[0][0] == 1 or grid[-1][-1] == 1:
+            return -1
+        if len(grid) == len(grid[0]) == 1:
+            return 1 if grid[0][0] == 0 else -1
+        
+        # BFS
+        from collections import deque
+        cur_path_len = 1
+        visited = set()
+        visited.add((0, 0))
+        queue = deque([(0, 0, cur_path_len)])
+        end_i, end_j = len(grid) - 1, len(grid[0]) - 1
+        while queue:
+            i, j, cur_path_len = queue.popleft()
+            for ii, jj in [[1,0], [-1,0], [0,1], [0,-1], [-1,-1], [1,1], [1,-1], [-1,1]]:
+                new_i, new_j = ii + i, jj + j
+                if (new_i == i and new_j == j) or new_i < 0 or new_i >= len(grid) or new_j < 0 or new_j >= len(grid[0]) or grid[new_i][new_j] == 1 or (new_i, new_j) in visited:
+                    continue
+                if new_i == end_i and new_j == end_j:
+                    return cur_path_len + 1 
+                visited.add((new_i, new_j)) # IMPORTANT to add nodes to visited HERE for lowering the time complexity to O(V)!
+                queue.append((new_i, new_j, cur_path_len + 1))
+            # visited.remove(cur_node)
+        return -1
