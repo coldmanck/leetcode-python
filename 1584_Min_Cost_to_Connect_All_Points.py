@@ -28,10 +28,14 @@ class UnionFind:
 
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        # Solution 1: Kruskal's alrorithm
-        # 1. sort the edges according to the weights (in increasing order)
         def comp_dist(p1, p2):
             return abs(points[p1][0] - points[p2][0]) + abs(points[p1][1] - points[p2][1])
+        
+        # Solution 1: Kruskal's alrorithm
+        # time complexity: O(ElogE) + O(E * \alpha(V)) = O(ElogE)
+        # space complexity: O(logE) + O(V)
+        '''
+        # 1. sort the edges according to the weights (in increasing order)
         edges = [(a, b, comp_dist(a, b)) for a in range(len(points) - 1) for b in range(a + 1, len(points))]
         edges.sort(key=lambda x: x[2])
         
@@ -48,3 +52,35 @@ class Solution:
                 if n_edges == len(points) - 1:
                     return total_dist
         return 0
+        '''
+        
+        # Solution 2: Prim's algorithm
+        # time complexity: O((V+E)*logV)
+        # space complexity: O(V)
+        # 1. maintain two sets: visited and unvisited. initialize visited with the start vertex.
+        import heapq
+        heap = [] # (min_dist_to_cur_set, node_a, node_b)
+        visited = set()
+        visited.add(0)
+        unvisited = set(range(len(points))) - visited
+        for i in range(1, len(points)):
+            heap.append((comp_dist(0, i), 0, i))
+        heapq.heapify(heap)
+        
+        total_dist = 0
+        while len(visited) < len(points):
+            min_dist, _, node_b = heapq.heappop(heap)
+            while node_b in visited:
+                min_dist, _, node_b = heapq.heappop(heap)
+            
+            total_dist += min_dist
+            visited.add(node_b)
+            unvisited.remove(node_b)
+            for i in unvisited:
+                heapq.heappush(heap, (comp_dist(node_b, i), node_b, i))
+        return total_dist
+        
+        # 2. for the neighbors of each vertex in the visited set, pick the `nearest` one to 
+        #    add to the visited set ("grow" the MST)
+        # 3. stop until the unvisited sets is empty
+        
