@@ -10,6 +10,7 @@
 
 class Solution:
     def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
+        '''
         if not root:
             return []
         ans, level = [], [root]
@@ -20,4 +21,20 @@ class Solution:
             ans.append(temp_ans)
             level = [leaf for node in level for leaf in (node.left, node.right) if leaf]
         return ans
+        '''
         
+        # Runtime: 36 ms, faster than 82.29% of Python3 online submissions for Binary Tree Zigzag Level Order Traversal.
+        # Memory Usage: 14.2 MB, less than 60.22% of Python3 online submissions for Binary Tree Zigzag Level Order Traversal.
+        if not root:
+            return []
+        queue = [root]
+        ans = []
+        start_from_left = True
+        while queue:
+            if start_from_left:
+                ans.append([queue[i].val for i in range(len(queue))])
+            else:
+                ans.append([queue[i].val for i in range(len(queue) - 1, -1, -1)])
+            queue = [child for node in queue for child in (node.left, node.right) if child]
+            start_from_left = not start_from_left
+        return ans
