@@ -1,16 +1,33 @@
 class Solution:
     def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
-        '''Max-heap: time O(K + (N-K)logK) space O(K)'''
-        # if K == len(points):
-        #     return points
-        # import heapq
-        # heap = [(-(p[0]**2 + p[1]**2), i) for i, p in enumerate(points[:K])]
+        def comp_dist(point):
+            return point[0] ** 2 + point[1] ** 2
+        import heapq
+        
+        '''solution 1: heap
+        time O(N + klogN)
+        space O(N)
+        '''
+        # heap = [(comp_dist(point), point) for point in points]
         # heapq.heapify(heap)
-        # for i in range(K, len(points)):
-        #     dist = points[i][0] ** 2 + points[i][1] ** 2
-        #     if dist < -heap[0][0]:
-        #         heapq.heapreplace(heap, (-dist, i))
-        # return [points[i] for _, i in heap]
+        # ans = []
+        # while len(ans) < k:
+        #     dist, point = heapq.heappop(heap)
+        #     ans.append(point)
+        # return ans
+        
+        '''solution 2: optimized heap
+        time O(k + (N-k)logk)
+        space O(k)
+        '''
+        # heap = [(-comp_dist(point), point) for point in points[:k]]
+        # heapq.heapify(heap) # max heap
+        # ans = []
+        # for point in points[k:]:
+        #     dist = -comp_dist(point)
+        #     if dist > heap[0][0]:
+        #         heapq.heappushpop(heap, (dist, point))
+        # return [point for dist, point in heap]
         
         '''Quickselect: time best=avg=O(n) worst=O(n^2) space O(n)'''
         if K == len(points):

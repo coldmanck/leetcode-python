@@ -24,6 +24,26 @@ class Solution:
                                 queue.append((new_i, new_j))
                                 grid[new_i][new_j] = '0'
         return ans
+
+        '''DFS'''
+        # visited = set()
+        # n_island = 0
+        # for i in range(len(grid)):
+        #     for j in range(len(grid[0])):
+        #         if grid[i][j] == '1' and (i, j) not in visited:
+        #             n_island += 1
+        #             stack = [(i, j)]
+        #             visited.add((i, j))
+        #             while stack:
+        #                 i2, j2 = stack.pop()
+        #                 for delta_i, delta_j in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        #                     i3, j3 = i2 + delta_i, j2 + delta_j
+        #                     if (not 0 <= i3 < len(grid)) or (not 0 <= j3 < len(grid[0])):
+        #                         continue
+        #                     if grid[i3][j3] == '1' and (i3, j3) not in visited:
+        #                         stack.append((i3, j3))
+        #                         visited.add((i3, j3))
+        # return n_island
         
         '''
         Runtime: 152 ms, faster than 45.13% of Python3 online submissions for Number of Islands.
