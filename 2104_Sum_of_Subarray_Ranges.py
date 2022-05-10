@@ -27,8 +27,8 @@ class Solution:
         stack = [] # monotonic decreasing stack
         for i in range(len(new_nums)):
             while stack and new_nums[stack[-1]] < new_nums[i]:
-                cur_min_idx = stack.pop()
-                ans += new_nums[cur_min_idx] * (i - cur_min_idx) * (cur_min_idx - stack[-1])
+                cur_max_idx = stack.pop()
+                ans += new_nums[cur_max_idx] * (i - cur_max_idx) * (cur_max_idx - stack[-1])
             stack.append(i)
         
         return ans
