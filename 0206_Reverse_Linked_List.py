@@ -20,14 +20,23 @@ class Solution:
         # return prev
         
         '''Recursive solution'''
-        def reverse_helper(node):
-            if node is None or node.next is None:
-                return node
-            # reverse_helper(node.next).next = head
-            p = reverse_helper(node.next)
-            node.next.next = node
-            node.next = None
-            return p
-        return reverse_helper(head)
-        
-        
+        # def reverse_helper(node):
+        #     if node is None or node.next is None:
+        #         return node
+        #     # reverse_helper(node.next).next = head
+        #     p = reverse_helper(node.next)
+        #     node.next.next = node
+        #     node.next = None
+        #     return p
+        # return reverse_helper(head)
+
+        '''Recursive solution II'''
+        def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+            if not head or not head.next:
+                return head
+            
+            if head.next:
+                new_head = self.reverseList(head.next)
+                head.next.next = head
+                head.next = None # this must be added or there'd be issues for the first two nodes 
+                return new_head

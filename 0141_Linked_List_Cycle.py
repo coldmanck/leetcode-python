@@ -7,8 +7,8 @@
 class Solution:
     def hasCycle(self, head: ListNode) -> bool:
         # floyd's algorithm (tortoise and hare)
-        fast = slow = head
-        while fast and fast.next and slow:
+        slow = fast = head
+        while slow and fast and fast.next:
             slow = slow.next
             fast = fast.next.next
             if slow is fast:
