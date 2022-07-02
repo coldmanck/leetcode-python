@@ -3,9 +3,18 @@
 
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        ele_set = set()
-        for num in nums:
-            if num in ele_set:
+        '''linaer scanning: time O(n) space O(n)'''
+        # my_set = set()
+        # for num in nums:
+        #     if num in my_set:
+        #         return True
+        #     my_set.add(num)
+        # return False
+        
+        '''scan after sorting: time O(nlogn) space O(1)'''
+        for i, num in enumerate(sorted(nums)):
+            if i != 0 and num == old_num:
                 return True
-            ele_set.add(num)
+            old_num = num
         return False
+            
