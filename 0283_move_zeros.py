@@ -6,16 +6,32 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        '''brute-force O(n^2)'''
-        # for i in reversed(range(len(nums))):
-        #     if nums[i] == 0:
-        #         for j in range(i, len(nums)-1):
-        #             nums[j], nums[j+1] = nums[j+1], nums[j]
+        # brute-force O(n^2)
+        '''
+        for i in reversed(range(len(nums))):
+            if nums[i] == 0:
+                for j in range(i, len(nums)-1):
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
+        '''
         
-        '''O(n) method'''
+        # use deque: O(n) time O(n) space
+        '''
+        from collections import deque
+        zero_idxs = deque()
+        for i in range(len(nums)):
+            if nums[i] == 0:
+                zero_idxs.append(i)
+            elif len(zero_idxs) > 0:
+                zero_idx = zero_idxs.popleft()
+                nums[i], nums[zero_idx] = nums[zero_idx], nums[i]
+                zero_idxs.append(i)
+        return nums
+        '''
+        
+        '''O(n) time O(1) space method'''
         j = 0
         for i in range(len(nums)):
             if nums[i] != 0:
                 nums[j] = nums[i]
                 j += 1
-        nums[j:] = [0] * (len(nums)-j)
+        nums[j:] = [0] * (len(nums) - j)
