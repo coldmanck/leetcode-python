@@ -6,10 +6,9 @@ class ListNode:
 
 
 class Solution:
-    # O(n) time O(1) space solution
     def isPalindrome(self, head: ListNode) -> bool:
-        # reverse the first half of the linked list and compare if the two halves equals
-        
+        # Implementaion I: reverse the first half of the linked list and compare if the two halves equals
+        '''
         # compute length
         length = 0
         node = head
@@ -35,4 +34,37 @@ class Solution:
                 return False
             prev = prev.next
             head = head.next
+        return True
+        '''
+
+        # Implementaion II: O(n) time O(n) space
+        '''
+        nums = []
+        cur = head
+        while cur is not None:
+            nums.append(cur.val)
+            cur = cur.next
+        left, right = 0, len(nums) - 1
+        while left < right:
+            if nums[left] != nums[right]:
+                return False
+            left, right = left + 1, right - 1
+        return True
+        '''
+
+        # Implementaion III: O(n) time O(1) space
+        # Ref.: https://leetcode.com/problems/palindrome-linked-list/solutions/1137027/js-python-java-c-easy-floyd-s-reversal-solution-w-explanation/
+        # find the middle location
+        slow = fast = head
+        while fast and fast.next:
+            slow, fast = slow.next, fast.next.next
+        # reverse the second half linked list
+        prev, slow, prev.next = slow, slow.next, None
+        while slow:
+            slow.next, prev, slow = prev, slow, slow.next
+        front, tail = head, prev
+        while front and tail:
+            if front.val != tail.val:
+                return False
+            front, tail = front.next, tail.next
         return True
