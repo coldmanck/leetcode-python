@@ -23,11 +23,22 @@ class Solution:
         # return ans
         
         '''Method 3: DP'''
-        # dp[i] = dp[i - offset] + 1
-        offset = 1
-        dp = [0 for _ in range(num + 1)]
-        for i in range(1, num + 1):
-            if i >= 2 * offset:
-                offset *= 2
-            dp[i] = dp[i - offset] + 1
-        return dp
+        # offset = 1
+        # dp = [0 for _ in range(num + 1)]
+        # for i in range(1, num + 1):
+        #     if i >= 2 * offset:
+        #         offset *= 2
+        #     dp[i] = dp[i - offset] + 1
+        # return dp
+
+        '''Method 3-2: DP: clearer way'''
+        # https://medium.com/jacky-life/leetcode-counting-bits-6981cd89fa73
+        if n == 0:
+            return [0]
+        elif n == 1:
+            return [0, 1]
+        else:
+            results = [0, 1]
+        for i in range(2, n + 1):
+            results.append(results[i // 2] + results[i % 2])
+        return results
