@@ -1,54 +1,38 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        # can be factorized nums[j] + nums[k] == -nums[i]
-        if len(nums) <= 2:
-            return []
+        # brute-force: time O(n^3) space O(1)
+        
+        # transform into twoSum: time O(n^2) space O(n)
+        # ans = set()
+        # for i in range(len(nums) - 2):
+        #     target_set = set()
+        #     for j in range(i + 1, len(nums)):
+        #         if nums[j] in target_set:
+        #             ans.add(tuple(sorted([nums[i], -nums[j]-nums[i], nums[j]])))
+        #         else:
+        #             target_set.add(-nums[j]-nums[i])
+        # return list(ans)
+        
+        # two-pointer after sorting: time O(nlogn + n^2) space O(1)
         ans = set()
         nums.sort()
         for i in range(len(nums) - 2):
-            target = -nums[i]
-            value_needed = set()
-            for j in range(i + 1, len(nums)):
-                if target - nums[j] in value_needed:
-                    ans.add(
-                        ((-target, target - nums[j], nums[j]))
-                    )
-                else:
-                    value_needed.add(nums[j])
-        return list(ans)
-        # time: O(n**2 + nlogn) = O(n**2)
-        # space: O(n) for python's sorted or O(nlogn) depends on the sorting algo. used
-        
-        # binary search?
-        '''
-        nums.sort()
-        ans = []
-        i = 0
-        while i < len(nums) - 2:
             left, right = i + 1, len(nums) - 1
             while left < right:
-                cur = nums[left] + nums[right]
-                if cur == -nums[i]:
-                    ans.append([nums[i], nums[left], nums[right]])
+                if left == i:
                     left += 1
-                    while left < right and nums[left] == nums[left - 1]:
-                        left += 1
+                if right == i:
                     right -= 1
-                    while left < right and nums[right] == nums[right + 1]:
-                        right -= 1
-                elif cur < -nums[i]:
-                    left += 1
-                    while left < right and nums[left] == nums[left - 1]:
-                        left += 1
+                if left >= right:
+                    break
+                if nums[left] + nums[right] == -nums[i]:
+                    ans.add(tuple(sorted([nums[left], nums[right], nums[i]])))
+                    left, right = left + 1, right - 1
+                elif nums[left] + nums[right] > -nums[i]:
+                    right -= 1
                 else:
-                    right -= 1
-                    while left < right and nums[right] == nums[right + 1]:
-                        right -= 1
-            i += 1
-            while i < len(nums) - 2 and nums[i] == nums[i - 1]:
-                i += 1
-        return ans
-        '''
+                    left += 1
+        return list(ans)
         
         # recursion method: O(2^n)
         '''
