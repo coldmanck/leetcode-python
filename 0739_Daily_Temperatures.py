@@ -1,15 +1,13 @@
 class Solution:
     def dailyTemperatures(self, T: List[int]) -> List[int]:
         '''stack time O(n) space O(n)'''
-        if not T:
-            return []
-        stack = [(T[0], 0)]
+        stack = [] # (temp, idx)
         ans = [0] * len(T)
-        for i in range(1, len(T)):
-            while stack and T[i] > stack[-1][0]:
-                t2, t2_i = stack.pop()
-                ans[t2_i] = i - t2_i
-            stack.append((T[i], i))
+        for idx, temp in enumerate(T):
+            while stack and temp > stack[-1][0]:
+                _, low_idx = stack.pop()
+                ans[low_idx] = idx - low_idx
+            stack.append((temp, idx))
         return ans
             
         
