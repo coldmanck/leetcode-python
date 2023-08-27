@@ -3,35 +3,18 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        def reverse(nums, left, right):
-            while left < right:
-                nums[left], nums[right] = nums[right], nums[left]
-                left, right = left + 1, right - 1
-        
-        if not nums:
-            return
-        i = len(nums) - 1
-        while i > 0 and nums[i] <= nums[i - 1]:
+        i = len(nums) - 2
+        # i: find nums[i] that is smaller than nums[i+1]
+        while i >= 0 and nums[i] >= nums[i + 1]:
             i -= 1
-        if i == 0:
-            reverse(nums, 0, len(nums) - 1)
+        if i == -1:
+            nums.reverse()
             return
-        
-        # a) another pass to find the smallest number after idx (i-1) that larger than nums[i - 1]
-        # j = i
-        # while j < len(nums) and nums[j] > nums[i - 1]:
-        #     j += 1
-        
-        # a-2) can use binary search instead
-        left, right = i, len(nums) - 1
-        while left < right:
-            mid = (left + right) // 2 + 1
-            if nums[mid] <= nums[i - 1]:
-                right = mid - 1
-            else:
-                left = mid
-        j = left + 1
-        
-        nums[i - 1], nums[j - 1] = nums[j - 1], nums[i - 1]
-        reverse(nums, i, len(nums) - 1)
-        return
+        # j: find nums[j] that is larger than nums[i]
+        j = len(nums) - 1
+        while j > i and nums[j] <= nums[i]:
+            j -= 1
+        # swap nums[i] and nums[j]
+        nums[i], nums[j] = nums[j], nums[i]
+        # reverse nums[i+1:] so that the remaining transforms from non-increasing to non-decreasing
+        nums[i+1:] = reversed(nums[i+1:])
