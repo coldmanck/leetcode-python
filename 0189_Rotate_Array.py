@@ -6,16 +6,12 @@ class Solution:
         '''time O(n) space O(1)'''
         nums.reverse()
         k %= len(nums)
-        
-        left, right = 0, k - 1
-        while left < right:
-            nums[left], nums[right] = nums[right], nums[left]
-            left, right = left + 1, right - 1
-        
-        left, right = k, len(nums) - 1
-        while left < right:
-            nums[left], nums[right] = nums[right], nums[left]
-            left, right = left + 1, right - 1
+        def reverse_(arr, left, right):
+            while left < right:
+                arr[left], arr[right] = arr[right], arr[left]
+                left, right = left + 1, right - 1
+        reverse_(nums, 0, k - 1)
+        reverse_(nums, k, len(nums) - 1)
             
         
         '''time = space = O(n)'''

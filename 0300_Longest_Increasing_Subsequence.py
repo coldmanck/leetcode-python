@@ -5,6 +5,7 @@ class Solution:
         # dp(i) return the LIS in nums[0:i+1] (incl. the int. at index i)
         # recurrence relation: dp(i) = max([dp(j) + 1 for j in range(i) if nums[j] < nums[i]])
         # base cases: dp(0) = 1
+        # time: O(n^2) space: O(n)
         
         @lru_cache(None)
         def dp(i):
